@@ -1,0 +1,51 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "sass": "sass --watch ./assets/scss/main.scss ./assets/css/style.css"
+  },
+  "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^43.2.0",
+    "@ckeditor/ckeditor5-vue": "^7.2.0",
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/interaction": "^6.1.15",
+    "@fullcalendar/timegrid": "^6.1.15",
+    "@fullcalendar/vue3": "^6.1.15",
+    "@vuepic/vue-datepicker": "^9.0.3",
+    "bootstrap": "^5.3.3",
+    "chart.js": "^4.4.4",
+    "ckeditor5": "^43.2.0",
+    "ckeditor5-premium-features": "^43.2.0",
+    "countup.js": "^2.8.0",
+    "lightgallery": "^2.7.2",
+    "nuxt": "^3.13.0",
+    "nuxt-rating": "^0.1.5",
+    "sweetalert2": "^11.14.3",
+    "swiper": "^11.1.14",
+    "vee-validate": "^4.15.1",
+    "vue": "latest",
+    "vue-chartjs": "^5.3.1",
+    "vue-draggable-next": "^2.2.1",
+    "vue-multiselect": "^3.1.0",
+    "vue-router": "latest",
+    "vue-select": "^4.0.0-beta.6",
+    "vue3-apexcharts": "^1.7.0",
+    "vue3-colorpicker": "^2.3.0",
+    "vue3-datepicker": "^0.4.0",
+    "vue3-dropzone": "^2.2.1",
+    "vue3-select": "^0.1.2",
+    "vue3-slider": "^1.10.1",
+    "vue3-star-ratings": "^3.0.5",
+    "vue3-toastify": "^0.2.3",
+    "yup": "^1.6.1"
+  },
+  "devDependencies": {
+    "sass": "^1.80.3"
+  }
+}
