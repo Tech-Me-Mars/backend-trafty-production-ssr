@@ -369,6 +369,7 @@
 </template>
 
 <script lang="ts">
+// import '@/assets/css/header.custom.css'
 import { defineComponent, ref } from "vue";
 import { SVGImage } from "@/constent/Theme";
 import { Store } from "~/stores/Store";
@@ -403,4 +404,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+@import url("@/assets/css/header.custom.css");
+
+</style>

@@ -84,20 +84,20 @@ onMounted(() => {
   responSiveSize();
   window.addEventListener("resize", MediaHandler);
 });
+
+const isloadingAxi = useState('isloadingAxi')
 </script>
 
 <template>
   <NuxtLayout>
-    <div
-      id="main-wrapper"
-      :class="`show ${naveHeader ? 'menu-toggle' : ''} ${
-        iconHover ? 'iconhover-toggle' : ''
-      }`"
-    >
+    <div id="main-wrapper" :class="`show ${naveHeader ? 'menu-toggle' : ''} ${iconHover ? 'iconhover-toggle' : ''
+      }`">
       <NavHeader />
       <ChatBox />
       <Header />
       <Sidebar />
+      <CustomBlockLoading v-if="isloadingAxi" />
+
       <div class="content-body" ref="contentHeight">
         <NuxtPage />
       </div>
@@ -105,9 +105,7 @@ onMounted(() => {
         <div class="copyright">
           <p>
             Copyright © Developed by
-            <NuxtLink to="https://dexignzone.com/" target="_blank"
-              >DexignZone</NuxtLink
-            >
+            <NuxtLink to="https://dexignzone.com/" target="_blank">DexignZone</NuxtLink>
             {{ new Date().getFullYear() }}
           </p>
         </div>
