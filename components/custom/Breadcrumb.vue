@@ -1,3 +1,4 @@
+
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue'
 
@@ -13,7 +14,20 @@ const props = defineProps<{
 
 // Dynamic import สำหรับ Heroicons
 </script>
+<style scoped>
+/* .page-titles2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1.95rem 0.6rem;
+  background: #ffffff;
+  position: relative;
+  z-index: 1;
+  border-bottom: 1px solid #e6e6e6;
+  flex-flow: wrap;
+} */
 
+</style>
 <template>
   <div class="page-titles">
     <ol class="breadcrumb align-items-center">

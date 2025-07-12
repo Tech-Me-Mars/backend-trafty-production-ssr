@@ -31,7 +31,7 @@ watchEffect(() => {
     <div class="deznav-scroll">
       <ul class="metismenu" id="menu">
         <li class="menu-title">YOUR COMPANY</li>
-        <template v-for="({ title, icons, className, subMenuItems, to }, ind) in MenuItems" :key="ind">
+        <!-- <template v-for="({ title, icons, className, subMenuItems, to }, ind) in MenuItems" :key="ind">
           <li v-if="className == 'sub-menu'" :class="addActive == title ? ' mm-active' : ''">
             <NuxtLink class="has-arrow" to="?" data-bs-toggle="collapse" :data-bs-target="`#collapseExample${ind}`" aria-expanded="false">
               <div class="menu-icon" v-html="icons"></div>
@@ -69,7 +69,7 @@ watchEffect(() => {
               <span class="nav-text">{{ title }}</span>
             </NuxtLink>
           </li>
-        </template>
+        </template> -->
       </ul>
       <div class="help-desk">
         <a href="javascript:void(0)" class="btn btn-primary">Help Desk</a>

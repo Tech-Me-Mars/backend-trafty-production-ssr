@@ -1,11 +1,12 @@
 <template>
 
-
-  <div class="container-fluid">
-      <CustomBreadcrumb :items="[
+  <!-- <PageTitle name="Manage Client" title="Manage Client" /> -->
+<CustomBreadcrumb :items="[
     { label: 'Home', icon: 'HomeIcon', to: '/' },
     { label: 'Manage Client', icon: 'UsersIcon', to: '/users' }
   ]" title="Manage Users" />
+  <div class="container-fluid " >
+      
     <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
       <div class="dataTables_filter d-flex align-items-center mb-2 mb-md-0">
         <label class="mb-0 me-2">Search:</label>

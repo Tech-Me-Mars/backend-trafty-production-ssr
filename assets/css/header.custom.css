@@ -1,4 +1,6 @@
 
+
+
 .header {
   height: 3.125rem;
   z-index: 1;
@@ -18,10 +20,10 @@
   display: flex;
   position: relative;
 }
-
 [data-header-position="fixed"] .content-body {
   padding-top: 3.125rem;
 }
+
 [data-header-position="fixed"] .header {
   position: fixed;
   top: 0;
