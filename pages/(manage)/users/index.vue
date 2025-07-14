@@ -1,9 +1,7 @@
 <template>
-
-  <!-- <PageTitle name="Manage Client" title="Manage Client" /> -->
 <CustomBreadcrumb :items="[
     { label: 'Home', icon: 'HomeIcon', to: '/' },
-    { label: 'Manage Client', icon: 'UsersIcon', to: '/users' }
+    { label: 'Manage Users ', icon: 'UsersIcon', to: '/users' }
   ]" title="Manage Users" />
   <div class="container-fluid " >
       
@@ -46,7 +44,7 @@
       </CustomModal>
 
       <!-- Modal Create/Edit -->
-      <CustomModal v-model="showModalForm" :title="isEdit ? 'แก้ไขผู้ใช้' : 'เพิ่มผู้ใช้ใหม่'">
+      <CustomModal v-model="showModalForm" :title="isEdit ? 'แก้ไขผู้ใช้' : 'เพิ่มผู้ใช้ใหม่'">dd
         <Form @submit="onSubmit">
           <div class="mb-3">
             <label class="form-label">ชื่อ *</label>
@@ -101,11 +99,11 @@ const requireValue = 'กรุณาระบุข้อมูล'
 
 const validationSchema = toTypedSchema(
   zod.object({
-    name: zod.string().nonempty(requireValue),
-    email: zod.string().nonempty(requireValue).email('รูปแบบอีเมลไม่ถูกต้อง'),
-    username: zod.string().nonempty(requireValue).optional(),
-    password: zod.string().nonempty(requireValue).optional(),
-    phone: zod.string().nonempty(requireValue).optional(),
+    name: zod.string().nonempty(requireValue).default(""),
+    email: zod.string().nonempty(requireValue).email('รูปแบบอีเมลไม่ถูกต้อง').default(""),
+    username: zod.string().nonempty(requireValue).default(""),
+    password: zod.string().nonempty(requireValue).default(""),
+    phone: zod.string().nonempty(requireValue).default(""),
     status: zod.boolean().default(true),
   })
 )

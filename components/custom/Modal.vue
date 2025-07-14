@@ -7,7 +7,7 @@
       aria-modal="true"
       role="dialog"
     >
-      <div class="modal-dialog modal-dialog-center" role="document">
+      <div :class="['modal-dialog modal-dialog-center', sizeClass]" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">
@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   modelValue: {
     type: Boolean,
     required: true
@@ -53,11 +53,22 @@ defineProps({
   title: {
     type: String,
     default: ''
+  },
+  size: {
+    type: String,
+    default: '', // '', 'sm', 'lg', 'xl'
+    validator: (value) => ['', 'sm', 'lg', 'xl'].includes(value)
   }
 })
-defineEmits(['update:modelValue'])
+
+const sizeClass = computed(() => {
+  if (props.size === 'sm') return 'modal-sm'
+  if (props.size === 'lg') return 'modal-lg'
+  if (props.size === 'xl') return 'modal-xl'
+  return ''
+})
 </script>
 
 <style scoped>
-
+/* Optional custom modal styles */
 </style>

@@ -48,7 +48,7 @@ const props = defineProps<{
       </li>
     </ol>
 
-    <a
+    <!-- <a
       class="text-primary fs-13"
       data-bs-toggle="offcanvas"
       href="#offcanvasExample1"
@@ -56,6 +56,6 @@ const props = defineProps<{
       aria-controls="offcanvasExample1"
     >
       + Add Task
-    </a>
+    </a> -->
   </div>
 </template>
