@@ -132,7 +132,11 @@
   </div>
 
 </template>
+
 <script setup>
+// Define emits for parent component communication
+const emit = defineEmits(['upload', 'files-changed'])
+
 // Refs
 const fileInputMultiple = ref(null)
 const fileInputSingle = ref(null)
@@ -156,6 +160,7 @@ const handleUploadMultiple = (event) => {
   const files = target.files
   if (files) {
     fileListMultiple.value.push(...Array.from(files))
+    emitFilesChanged()
   }
 }
 
@@ -165,24 +170,37 @@ const handleUploadSingle = (event) => {
   const file = target.files?.[0]
   if (file) {
     fileListSingle.value = [file]
+    emitFilesChanged()
   }
 }
 
 // Remove from multiple
 const removeFileMultiple = (index) => {
   fileListMultiple.value.splice(index, 1)
+  emitFilesChanged()
 }
 
 // Remove single file
 const removeFileSingle = () => {
   fileListSingle.value = []
   if (fileInputSingle.value) fileInputSingle.value.value = ''
+  emitFilesChanged()
 }
 
 // Clear all multiple
 const clearAllMultiple = () => {
   fileListMultiple.value = []
   if (fileInputMultiple.value) fileInputMultiple.value.value = ''
+  emitFilesChanged()
+}
+
+// Emit files changed event
+const emitFilesChanged = () => {
+  emit('files-changed', {
+    multiple: fileListMultiple.value,
+    single: fileListSingle.value,
+    total: fileListMultiple.value.length + fileListSingle.value.length
+  })
 }
 
 // Upload simulation
@@ -193,14 +211,32 @@ const uploadFiles = () => {
     return
   }
 
+  // Emit to parent component
+  emit('upload', {
+    files: allFiles,
+    multiple: fileListMultiple.value,
+    single: fileListSingle.value
+  })
+
   alert(`Uploading ${allFiles.length} file(s)...`)
   console.log('Files to upload:', allFiles)
 }
+
+// Expose methods to parent component
+defineExpose({
+  clearAll: () => {
+    clearAllMultiple()
+    removeFileSingle()
+  },
+  getFiles: () => ({
+    multiple: fileListMultiple.value,
+    single: fileListSingle.value,
+    all: [...fileListMultiple.value, ...fileListSingle.value]
+  })
+})
 </script>
 
 <style scoped>
-
-
 .file-items::-webkit-scrollbar {
   width: 4px;
 }

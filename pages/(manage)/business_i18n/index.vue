@@ -1,14 +1,18 @@
 <template>
+    <CustomBreadcrumb :items="[
+        { label: 'Home', icon: 'HomeIcon', to: '/' },
+        { label: 'Business I18n ', icon: 'UsersIcon', to: '/business_i18n' }
+    ]" title="จัดการข้อมูลธุรกิจ" />
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="table-container">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="text-primary">จัดการข้อมูลธุรกิจ</h2>
+                    <!-- <div class="d-flex justify-content-between align-items-center mb-3">
+               
                         <button class="btn btn-success" @click="loadBusinessData">
                             <i class="fas fa-refresh"></i> โหลดข้อมูล
                         </button>
-                    </div>
+                    </div> -->
 
                     <div v-if="loading" class="loading-spinner">
                         <div class="spinner-border text-primary" role="status">
@@ -36,11 +40,15 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <select v-model="selectedLanguage" class="form-select">
-                                    <option value="th">ภาษาไทย</option>
-                                    <option value="en">English</option>
-                                    <option value="cn">中文</option>
-                                </select>
+                                <CustomSelect v-model="selectedLanguage" :options="[
+                                    { label: 'ภาษาไทย', value: 'th' },
+                                    { label: 'English', value: 'en' },
+                                    { label: '中文', value: 'cn' },
+                                ]" label-field="label" value-field="value" />
+                            </div>
+                            <div class="col-md-3">
+                                <NuxtLink to="/business_i18n/create" class="btn btn-primary ms-2">+ เพิ่มข้อมูล
+                                </NuxtLink>
                             </div>
                         </div>
 
@@ -79,7 +87,7 @@
                             <!-- Service & Business Type -->
                             <template #item-service_type="item">
                                 <span class="badge bg-info">{{ getI18nText(item.service_type.service_type_name_i18n)
-                                    }}</span>
+                                }}</span>
                             </template>
 
                             <template #item-business_type="item">
@@ -203,7 +211,8 @@
                             <!-- Actions -->
                             <template #item-actions="item">
                                 <div class="btn-group" role="group">
-                                    <button class="btn btn-sm btn-outline-primary" @click="viewDetails(item)">
+                                    <button class="btn btn-sm btn-outline-primary" style="width: 5rem;"
+                                        @click="viewDetails(item)">
                                         <i class="fas fa-eye"></i> ดู
                                     </button>
                                     <button class="btn btn-sm btn-outline-warning" @click="editBusiness(item)">
@@ -223,251 +232,201 @@
         <!-- Detail Modal -->
         <CustomModal v-model="detailModal" title="รายละเอียดธุรกิจ" size="xl">
             <div class="modal-body" v-if="selectedBusiness">
-                        <div class="row">
-                            <!-- Business Information -->
-                            <div class="col-md-6">
-                                <div class="card mb-3">
-                                    <div class="card-header">
-                                        <h6 class="mb-0">ข้อมูลธุรกิจ</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <p><strong>ID:</strong> {{ selectedBusiness.id }}</p>
-                                        <p><strong>ชื่อธุรกิจ:</strong> {{
-                                            getI18nText(selectedBusiness.business_name_i18n) }}
-                                        </p>
-                                        <p><strong>ผู้ติดต่อ:</strong> {{
-                                            getI18nText(selectedBusiness.business_person_i18n) }}
-                                        </p>
-                                        <p><strong>ที่อยู่:</strong> {{
-                                            getI18nText(selectedBusiness.business_address_i18n) }}
-                                        </p>
-                                        <p><strong>ติดต่อ:</strong> {{
-                                            getI18nText(selectedBusiness.business_contact_i18n) }}
-                                        </p>
-                                        <p><strong>อีเมล:</strong> {{ getI18nText(selectedBusiness.business_email_i18n)
-                                            }}</p>
-                                        <p><strong>ประเภทบริการ:</strong> {{
-                                            getI18nText(selectedBusiness.service_type.service_type_name_i18n) }}</p>
-                                        <p><strong>ประเภทธุรกิจ:</strong> {{
-                                            getI18nText(selectedBusiness.business_type.business_type_name_i18n) }}</p>
-                                        <p><strong>รูปแบบธุรกิจ:</strong> {{
-                                            getI18nText(selectedBusiness.business_model.business_model_name_i18n) }}</p>
-                                    </div>
-                                </div>
+                <div class="row">
+                    <!-- Business Information -->
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h6 class="mb-0">ข้อมูลธุรกิจ</h6>
                             </div>
-
-                            <!-- Shop Information -->
-                            <div class="col-md-6">
-                                <div class="card mb-3">
-                                    <div class="card-header">
-                                        <h6 class="mb-0">ข้อมูลร้าน</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <p><strong>ชื่อร้าน:</strong> {{ getI18nText(selectedBusiness.shop_name_i18n) }}
-                                        </p>
-                                        <p><strong>ที่อยู่ร้าน:</strong> {{
-                                            getI18nText(selectedBusiness.shop_address_i18n) }}
-                                        </p>
-                                        <p><strong>เวลาเปิด-ปิด:</strong> {{
-                                            getI18nText(selectedBusiness.shop_time_i18n) }}</p>
-                                        <p><strong>เบอร์โทร:</strong> {{ getI18nText(selectedBusiness.shop_phone_i18n)
-                                            }}</p>
-                                        <p><strong>รายละเอียด:</strong> {{
-                                            getI18nText(selectedBusiness.shop_details_i18n) }}
-                                        </p>
-                                        <p><strong>คะแนน:</strong> {{ selectedBusiness.star }}/5</p>
-                                        <p><strong>จำนวนเข้าชม:</strong> {{
-                                            selectedBusiness.visit_count?.toLocaleString() }}
-                                        </p>
-                                        <p><strong>พิกัด:</strong> ละติจูด:{{ getI18nText(selectedBusiness.latitude_i18n) }}, ลองจิจูด{{
-                                            getI18nText(selectedBusiness.longitude_i18n) }}</p>
-                                    </div>
-                                </div>
+                            <div class="card-body">
+                                <p><strong>ID:</strong> {{ selectedBusiness.id }}</p>
+                                <p><strong>ชื่อธุรกิจ:</strong> {{
+                                    getI18nText(selectedBusiness.business_name_i18n) }}
+                                </p>
+                                <p><strong>ผู้ติดต่อ:</strong> {{
+                                    getI18nText(selectedBusiness.business_person_i18n) }}
+                                </p>
+                                <p><strong>ที่อยู่:</strong> {{
+                                    getI18nText(selectedBusiness.business_address_i18n) }}
+                                </p>
+                                <p><strong>ติดต่อ:</strong> {{
+                                    getI18nText(selectedBusiness.business_contact_i18n) }}
+                                </p>
+                                <p><strong>อีเมล:</strong> {{ getI18nText(selectedBusiness.business_email_i18n)
+                                }}</p>
+                                <p><strong>ประเภทบริการ:</strong> {{
+                                    getI18nText(selectedBusiness.service_type.service_type_name_i18n) }}</p>
+                                <p><strong>ประเภทธุรกิจ:</strong> {{
+                                    getI18nText(selectedBusiness.business_type.business_type_name_i18n) }}</p>
+                                <p><strong>รูปแบบธุรกิจ:</strong> {{
+                                    getI18nText(selectedBusiness.business_model.business_model_name_i18n) }}</p>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Business List -->
-                        <div class="row mt-3"
-                            v-if="selectedBusiness.business_list && selectedBusiness.business_list.length > 0">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="mb-0">รายการสินค้า/บริการ</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-sm table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>ชื่อสินค้า/บริการ</th>
-                                                        <th>ราคา</th>
-                                                        <th>สถานะ</th>
-                                                        <th>ผู้สร้าง</th>
-                                                        <th>วันที่สร้าง</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="item in selectedBusiness.business_list" :key="item.id">
-                                                        <td>{{ item.id }}</td>
-                                                        <td>{{ getI18nText(item.business_list_name_i18n) }}</td>
-                                                        <td>{{ getI18nText(item.business_list_price_i18n) }} บาท</td>
-                                                        <td>
-                                                            <span
-                                                                :class="['badge', item.status ? 'bg-success' : 'bg-danger']">
-                                                                {{ item.status ? 'เปิดใช้งาน' : 'ปิดใช้งาน' }}
-                                                            </span>
-                                                        </td>
-                                                        <td>{{ item.by_user_id }}</td>
-                                                        <td>{{ formatDate(item.created_at) }}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                    <!-- Shop Information -->
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h6 class="mb-0">ข้อมูลร้าน</h6>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>ชื่อร้าน:</strong> {{ getI18nText(selectedBusiness.shop_name_i18n) }}
+                                </p>
+                                <p><strong>ที่อยู่ร้าน:</strong> {{
+                                    getI18nText(selectedBusiness.shop_address_i18n) }}
+                                </p>
+                                <p><strong>เวลาเปิด-ปิด:</strong> {{
+                                    getI18nText(selectedBusiness.shop_time_i18n) }}</p>
+                                <p><strong>เบอร์โทร:</strong> {{ getI18nText(selectedBusiness.shop_phone_i18n)
+                                }}</p>
+                                <p><strong>รายละเอียด:</strong> {{
+                                    getI18nText(selectedBusiness.shop_details_i18n) }}
+                                </p>
+                                <p><strong>คะแนน:</strong> {{ selectedBusiness.star }}/5</p>
+                                <p><strong>จำนวนเข้าชม:</strong> {{
+                                    selectedBusiness.visit_count?.toLocaleString() }}
+                                </p>
+                                <p><strong>พิกัด:</strong> ละติจูด:{{ getI18nText(selectedBusiness.latitude_i18n) }},
+                                    ลองจิจูด{{
+                                        getI18nText(selectedBusiness.longitude_i18n) }}</p>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Social Media -->
-                        <div class="row mt-3"
-                            v-if="selectedBusiness.business_social_media && selectedBusiness.business_social_media.length > 0">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="mb-0">โซเชียลมีเดีย</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-sm table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>ชื่อแพลตฟอร์ม</th>
-                                                        <th>ลิงก์</th>
-                                                        <th>สถานะ</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="social in selectedBusiness.business_social_media"
-                                                        :key="social.id">
-                                                        <td>{{ social.id }}</td>
-                                                        <td>{{ getI18nText(JSON.parse(social.social_media_name_i18n)) }}
-                                                        </td>
-                                                        <td>
-                                                            <a :href="getI18nText(social.social_media_link_i18n)"
-                                                                target="_blank" class="text-primary">
-                                                                {{ getI18nText(social.social_media_link_i18n) }}
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <span
-                                                                :class="['badge', social.status ? 'bg-success' : 'bg-danger']">
-                                                                {{ social.status ? 'เปิดใช้งาน' : 'ปิดใช้งาน' }}
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                <!-- Business List -->
+                <div class="row mt-3"
+                    v-if="selectedBusiness.business_list && selectedBusiness.business_list.length > 0">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">รายการสินค้า/บริการ</h6>
                             </div>
-                        </div>
-
-                        <!-- Open Days -->
-                        <div class="row mt-3"
-                            v-if="selectedBusiness.business_open_date && selectedBusiness.business_open_date.length > 0">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="mb-0">วันเปิดทำการ</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-6" v-for="day in selectedBusiness.business_open_date"
-                                                :key="day.id">
-                                                <div class="form-check">
-                                                    <span
-                                                        :class="['badge', day.status ? 'bg-success' : 'bg-secondary']">
-                                                        {{ getI18nText(day.day_name_i18n) }}
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>ชื่อสินค้า/บริการ</th>
+                                                <th>ราคา</th>
+                                                <th>สถานะ</th>
+                                                <th>ผู้สร้าง</th>
+                                                <th>วันที่สร้าง</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="item in selectedBusiness.business_list" :key="item.id">
+                                                <td>{{ item.id }}</td>
+                                                <td>{{ getI18nText(item.business_list_name_i18n) }}</td>
+                                                <td>{{ getI18nText(item.business_list_price_i18n) }} บาท</td>
+                                                <td>
+                                                    <span :class="['badge', item.status ? 'bg-success' : 'bg-danger']">
+                                                        {{ item.status ? 'เปิดใช้งาน' : 'ปิดใช้งาน' }}
                                                     </span>
-                                                </div>
-                                            </div>
+                                                </td>
+                                                <td>{{ item.by_user_id }}</td>
+                                                <td>{{ formatDate(item.created_at) }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="row mt-3"
+                    v-if="selectedBusiness.business_social_media && selectedBusiness.business_social_media.length > 0">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">โซเชียลมีเดีย</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>ชื่อแพลตฟอร์ม</th>
+                                                <th>ลิงก์</th>
+                                                <th>สถานะ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="social in selectedBusiness.business_social_media"
+                                                :key="social.id">
+                                                <td>{{ social.id }}</td>
+                                                <td>{{ getI18nText(JSON.parse(social.social_media_name_i18n)) }}
+                                                </td>
+                                                <td>
+                                                    <a :href="getI18nText(social.social_media_link_i18n)"
+                                                        target="_blank" class="text-primary">
+                                                        {{ getI18nText(social.social_media_link_i18n) }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <span
+                                                        :class="['badge', social.status ? 'bg-success' : 'bg-danger']">
+                                                        {{ social.status ? 'เปิดใช้งาน' : 'ปิดใช้งาน' }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Open Days -->
+                <div class="row mt-3"
+                    v-if="selectedBusiness.business_open_date && selectedBusiness.business_open_date.length > 0">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">วันเปิดทำการ</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6" v-for="day in selectedBusiness.business_open_date"
+                                        :key="day.id">
+                                        <div class="form-check">
+                                            <span :class="['badge', day.status ? 'bg-success' : 'bg-secondary']">
+                                                {{ getI18nText(day.day_name_i18n) }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Documents -->
-                        <div class="row mt-3"
-                            v-if="selectedBusiness.business_documents && selectedBusiness.business_documents.length > 0">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="mb-0">เอกสาร</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-3" v-for="doc in selectedBusiness.business_documents"
-                                                :key="doc.id">
-                                                <div class="card">
-                                                    <!-- <img :src="'https://your-api-domain.com/uploads/' + doc.business_documents_img"
+                <!-- Documents -->
+                <div class="row mt-3"
+                    v-if="selectedBusiness.business_documents && selectedBusiness.business_documents.length > 0">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">เอกสาร</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3" v-for="doc in selectedBusiness.business_documents"
+                                        :key="doc.id">
+                                        <div class="card">
+                                            <!-- <img :src="'https://your-api-domain.com/uploads/' + doc.business_documents_img"
                                                         class="card-img-top" style="height: 150px; object-fit: cover;"
                                                         @error="handleImageError"> -->
-                                                    <div class="card-body p-2">
-                                                        <small class="text-muted">{{ formatDate(doc.created_at)
-                                                            }}</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- System Info -->
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="mb-0">ข้อมูลระบบ</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <p><strong>สถานะ:</strong>
-                                                    <span
-                                                        :class="['badge', selectedBusiness.status ? 'bg-success' : 'bg-danger']">
-                                                        {{ selectedBusiness.status ? 'เปิดใช้งาน' : 'ปิดใช้งาน' }}
-                                                    </span>
-                                                </p>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <p><strong>ผู้สร้าง:</strong> {{ selectedBusiness.by_user_id }}</p>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <p><strong>วันที่สร้าง:</strong> {{
-                                                    formatDate(selectedBusiness.created_at) }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <p><strong>อัปเดตล่าสุด:</strong> {{
-                                                    formatDate(selectedBusiness.updated_at) }}
-                                                </p>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <p><strong>Service Type ID:</strong> {{ selectedBusiness.service_type_id
-                                                    }}</p>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <p><strong>Business Type ID:</strong> {{
-                                                    selectedBusiness.business_type_id }}
-                                                </p>
+                                            <div class="card-body p-2">
+                                                <small class="text-muted">{{ formatDate(doc.created_at)
+                                                }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -475,9 +434,58 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- System Info -->
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">ข้อมูลระบบ</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p><strong>สถานะ:</strong>
+                                            <span
+                                                :class="['badge', selectedBusiness.status ? 'bg-success' : 'bg-danger']">
+                                                {{ selectedBusiness.status ? 'เปิดใช้งาน' : 'ปิดใช้งาน' }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p><strong>ผู้สร้าง:</strong> {{ selectedBusiness.by_user_id }}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p><strong>วันที่สร้าง:</strong> {{
+                                            formatDate(selectedBusiness.created_at) }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p><strong>อัปเดตล่าสุด:</strong> {{
+                                            formatDate(selectedBusiness.updated_at) }}
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p><strong>Service Type ID:</strong> {{ selectedBusiness.service_type_id
+                                        }}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p><strong>Business Type ID:</strong> {{
+                                            selectedBusiness.business_type_id }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </CustomModal>
 
-        
+
     </div>
 </template>
 

@@ -1,5 +1,4 @@
 <script setup>
-import CustomSelect from "~/elements/CustomSelect.vue";
 
 import { useForm, useField } from "vee-validate"
 import * as yup from "yup"
@@ -96,7 +95,8 @@ const onSubmit = handleSubmit((values) => {
       <div class="mb-3 row">
         <label class="col-lg-3 col-form-label">เพศ *</label>
         <div class="col-lg-6">
-          <CustomSelect v-model="gender" :options="genderOptions" :class="{ 'is-invalid': errors.gender }" />
+          <CustomSelect v-model="gender" :options="genderOptions" label-field="title" value-field="value"
+            :class="{ 'is-invalid': errors.gender }" />
           <div v-if="errors.gender" class="invalid-feedback">{{ errors.gender }}</div>
         </div>
       </div>
@@ -109,7 +109,7 @@ const onSubmit = handleSubmit((values) => {
             Status
           </label>
         </div>
-          <div v-if="errors.status" class="invalid-feedback">{{ errors.status }}</div>
+        <div v-if="errors.status" class="invalid-feedback">{{ errors.status }}</div>
 
       </div>
 
