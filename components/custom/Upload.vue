@@ -12,7 +12,9 @@ const props = defineProps({
   clearable: { type: Boolean, default: true }
 })
 const emit = defineEmits(['update:modelValue', 'change'])
-const random=Math.floor(Math.random() * 10);
+const uid = useId()
+const random = Math.floor(Math.random() * 1000000)
+const inputId = computed(() => `${uid}-${props.multiple ? 'multi' : 'single'}`)
 // Refs
 const fileInput = ref(null)
 
@@ -65,7 +67,7 @@ const formatFileSize = (bytes) => {
 
 <template>
   <div class="file-upload-container">
-    <div class="d-flex align-items-center flex-wrap gap-2">
+    <div class="d-flex align-items-start flex-wrap gap-2">
       <input
         ref="fileInput"
         :type="'file'"
@@ -73,9 +75,9 @@ const formatFileSize = (bytes) => {
         :accept="accept"
         @change="handleUpload"
         class="d-none"
-        :id="multiple ? 'multipleUpload' : 'singleUpload'"
+        :id="inputId"
       />
-      <label :for="multiple ? 'multipleUpload' : 'singleUpload'" :class="['btn btn-sm', multiple ? 'btn-primary' : 'btn-success']">
+      <label :for="inputId" :class="['btn btn-sm', multiple ? 'btn-primary' : 'btn-success']">
         <i class="fas fa-upload me-1"></i>
         {{ label }}
       </label>

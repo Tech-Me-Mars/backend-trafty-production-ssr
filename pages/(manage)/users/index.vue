@@ -49,22 +49,22 @@
           <div class="mb-3">
             <label class="form-label">ชื่อ *</label>
             <input v-model="name" type="text" class="form-control" :class="{ 'is-invalid': errors.name }" />
-            <div class="invalid-feedback">{{ errors.name }}</div>
+            <div class="invalid">{{ errors.name }}</div>
           </div>
           <div class="mb-3">
             <label class="form-label">อีเมลล์ *</label>
             <input v-model="email" type="email" class="form-control" :class="{ 'is-invalid': errors.email }" />
-            <div class="invalid-feedback">{{ errors.email }}</div>
+            <div class="invalid">{{ errors.email }}</div>
           </div>
           <div class="mb-3" v-if="!isEdit">
             <label class="form-label">ชื่อผู้ใช้ *</label>
             <input v-model="username" type="text" class="form-control" :class="{ 'is-invalid': errors.username }" />
-            <div class="invalid-feedback">{{ errors.username }}</div>
+            <div class="invalid">{{ errors.username }}</div>
           </div>
           <div class="mb-3" v-if="!isEdit">
             <label class="form-label">รหัสผ่าน *</label>
             <input v-model="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" />
-            <div class="invalid-feedback">{{ errors.password }}</div>
+            <div class="invalid">{{ errors.password }}</div>
           </div>
           <div class="mb-3">
             <label class="form-label">เบอร์โทร</label>
@@ -219,7 +219,7 @@ onMounted(loadUsers)
   width: 200px;
 }
 
-.invalid-feedback {
+.invalid {
   display: block;
 }
 </style>
